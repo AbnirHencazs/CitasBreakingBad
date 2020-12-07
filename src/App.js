@@ -1,3 +1,5 @@
+import React, { useState } from 'react';
+import Cita from './Components/Cita';
 import styled from '@emotion/styled';
 
 const Contenedor = styled.div`
@@ -19,15 +21,20 @@ const Boton = styled.button`
   border: 2px solid black;
 `;
 
-const handleClick = async e => {
-  const req = await fetch('https://breaking-bad-quotes.herokuapp.com/v1/quotes')
-  const promesa = await req.json();
-  console.log(promesa[0])
-}
 
 function App() {
+  const [cita, setCita] = useState({});
+
+  const handleClick = async e => {
+    const req = await fetch('https://breaking-bad-quotes.herokuapp.com/v1/quotes')
+    const promesa = await req.json();
+    setCita(promesa[0]);
+  }
+
   return (
     <Contenedor>
+      <Cita
+        cita={cita}/>
       <Boton
         onClick={handleClick}>
         Obtener frase
